@@ -4,14 +4,14 @@ public class Product
 {
     public string Name { get; set; }
     public decimal Price { get; set; }
-    public int Quantity { get; set; }
+    public int AmountLeft { get; set; }
     public string Category { get; set; }
 
-    public Product(string productName, decimal price, int quantity, string category)
+    public Product(string productName, decimal price, int quantityLeft, string category)
     {
         Name = productName;
         Price = price;
-        Quantity = quantity;
+        AmountLeft = quantityLeft;
         Category = category;
     }
 }

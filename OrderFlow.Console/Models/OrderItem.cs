@@ -2,14 +2,14 @@
 
 public class OrderItem
 {
-    private Product Product { get; set; }
-    private int Quantity { get; set; } // Zmieniłem na public, żeby TotalPrice działał
+    public Product product { get; set; }
+    public int amountOrdered { get; set; }
 
-    public decimal TotalPrice => Product.Price * Quantity;
+    public decimal TotalPrice => product.Price * amountOrdered;
 
     public OrderItem(Product product, int quantity)
     {
-        Product = product;
-        Quantity = quantity;
+        this.product = product;
+        this.amountOrdered = quantity;
     }
 }
