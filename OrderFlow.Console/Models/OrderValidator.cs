@@ -11,6 +11,7 @@ class OrderValidator
     private ValidationRule ruleOfValidity;
     private Func<Order, bool> statusRule;
     private Func<Order, bool> deliveryMinValueRule;
+    private Func<Order, bool> correctDateRule;
     private int minDeliveryValue = 20;
 
     private void CheckOrderQuantity(out string errorMessage) //Sprawdź czy koszyk nie jest pusty (delegat ValidationRule)
@@ -65,7 +66,7 @@ class OrderValidator
     {
         this.order = orderToValidate;
         
-        ruleOfValidity += ValidateItemAvailability;
+        ruleOfValidity = ValidateItemAvailability;
         ruleOfValidity += CheckOrderQuantity;
         ruleOfValidity += ValidateCustomerInfo;
         
@@ -74,7 +75,7 @@ class OrderValidator
         {
             return this.order.TotalAmount > minDeliveryValue; //Zamówienia z dostawą tylko od jakiejś kwoty
         };
-
+        correctDateRule = isOrderDateCorrect => this.order.OrderDate <= DateTime.Now;
     }
 
     public void ValidateAll()
@@ -97,6 +98,11 @@ class OrderValidator
         if (!deliveryMinValueRule.Invoke(this.order))
         {
             System.Console.WriteLine($"Minimal delivery amount not reached. The minimal amount for your order to be delivered is 20.");
+        }
+
+        if (!correctDateRule.Invoke(this.order))
+        {
+            System.Console.WriteLine("Date of an order must not be from the future!");
         }
     }
 }

@@ -18,4 +18,9 @@ public class Customer
         Address = address;
         IsVIP = isVIP;
     }
+
+    public override string ToString()
+    {
+        return $"{Name}, {LastName}, {Email}, {Phone}, {Address} {(IsVIP ? "This customer is a VIP." : "This customer is not a VIP.")}";
+    }
 }
