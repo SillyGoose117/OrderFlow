@@ -15,7 +15,7 @@ public class Order
     {
         Customer = customer;
         CurrentStatus = Status.New;
-        this.OrderDate = DateTime.Now;
+        OrderDate = DateTime.Now;
         OrderId =  Guid.NewGuid();
     }
 
