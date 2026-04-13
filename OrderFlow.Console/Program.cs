@@ -83,32 +83,47 @@ class Program
         //Zapytania LINQ:
         System.Console.WriteLine("----------------------------");
         
-        var everyItem = everyOrder
+        //Ten zapis wydaje się bardziej czytelny
+        //Szczególnie z uwagi na prostszy syntax "SelectMany" zamiast "from from"
+        var itemsUnderTen = everyOrder
             .SelectMany(order => order.Items)
             .Where(item => item.product.Price < 10)
             .Select(item => new
             {
-                item.product.Name, 
+                item.product.Name,
                 item.product.Price
             })
             .Distinct();
         
-        System.Console.WriteLine("\"Showing list of items that cost less than 10$:");
+        // var itemsUnderTen2 = from  order in everyOrder
+        //     from item in order.Items
+        //     where item.product.Price < 10
+        //     select new {item.product.Name, item.product.Price};
         
-        foreach (var item in everyItem)
+        System.Console.WriteLine("\"Showing list of items that cost less than 10$:");   
+        
+        foreach (var item in itemsUnderTen)
         {
             System.Console.WriteLine($"{item.Name} - {item.Price}");
         }
         System.Console.WriteLine("----------------------------");
         
         var topClients = everyOrder
-            .GroupBy(order => order.Customer.LastName)
-            .Select(orderGroup => new 
-            { 
-                ClientName = orderGroup.Key, 
-                TotalAmountSpent = orderGroup.Sum(o => o.TotalAmount) 
+            .GroupBy(eliteCustomer => eliteCustomer.Customer.LastName)
+            .Select(groupOfClients => new
+            {
+                ClientName = groupOfClients.Key,
+                TotalAmountSpent = groupOfClients.Sum(o => o.TotalAmount)
             })
-            .Where(result => result.TotalAmountSpent > 100); // Filtr końcowy
+            .Where(result => result.TotalAmountSpent > 100);
+        
+        //Niepotrzebnie wprowadza "let" i "where" w dziwnych miejscach
+        //W method syntax ciąg jest to po prostu bardziej naturalny 
+        // var topClients2 = from o in everyOrder
+        //     group order by order.Customer.LastName into orderGroup
+        //     let totalAmountSpent = orderGroup.Sum(o => o.TotalAmount)
+        //     where  totalAmountSpent > 100
+        //     select new { ClientName = orderGroup.Key, TotalAmountSpent = orderGroup.Sum(o => o.TotalAmount) };
         
         System.Console.WriteLine("Showing a list of top clients:");
         
@@ -118,58 +133,100 @@ class Program
         }
         System.Console.WriteLine("----------------------------");
         
-        //To zapytanie jest w innej składni, ponieważ wymagała tego treść zadania
-        var customerReport = 
-            from customer in SampleData.ListOfCustomers
-            join order in everyOrder on customer.LastName equals order.Customer.LastName into customerOrders
-            select new 
-            { 
-                FullName = customer.Name + " " + customer.LastName, 
-                OrderCount = customerOrders.Count() 
-            };
+        //W porównaniu do "method syntax" tutaj możemy coś zrozumieć bez zaglądania do dokumentacji
+        var ordersPerCustomer = from customer in SampleData.ListOfCustomers 
+            join order in everyOrder on customer.LastName equals order.Customer.LastName into orders
+            select new {FullName = customer.Name + " " + customer.LastName, OrderCount = orders.Count()};
+        
+        //Ciężko jest się tutaj połapać bez dokumentacji przez skomplikowane osadzenie kluczy
+        //Dosyć mało naturalne 
+        // var ordersPerCustomer2 = SampleData.ListOfCustomers
+        //     .GroupJoin(everyOrder, customer => customer.LastName, order => order.Customer.LastName,
+        //         (customer, customerOrders) => new
+        //         {
+        //             FullName = customer.Name + " " + customer.LastName,
+        //             OrderCount = customerOrders.Count()
+        //         });
         
         System.Console.WriteLine("Showing a list of customers and how many orders they've placed:");
         
-        foreach (var customer in customerReport)
+        foreach (var customer in ordersPerCustomer)
         {
             System.Console.WriteLine($"{customer.FullName} - {customer.OrderCount}");
         }
         
         System.Console.WriteLine("----------------------------");
-        //To zadanie ma mixed syntaxm ponieważ wymagała tego treść zadania
+        
+        //Mieszanie składni wedle treści zadania
         var favoriteCategory = (from order in everyOrder
                 where order.Customer.LastName == "Lash"
                 select order)
-            .SelectMany(o => o.Items)
-            .GroupBy(i => i.product.Category)
-            .OrderByDescending(g => g.Count())
+            .SelectMany(order => order.Items)
+            .GroupBy(item => item.product.Category)
+            .OrderByDescending(categoryGroup => categoryGroup.Count())
             .FirstOrDefault()?.Key;
+        
+        // var favoriteCategory1 = everyOrder
+        //     .Where(order => order.Customer.LastName == "Lash")
+        //     .SelectMany(order => order.Items)
+        //     .GroupBy(item => item.product.Category)
+        //     .OrderByDescending(categoryGroup => categoryGroup.Count())
+        //     .Select(group => group.Key)
+        //     .FirstOrDefault();
+        
+        //Nie posiada odpowiednika "FirstOrDefault"?
+        // var favoriteCategory2 = from order in everyOrder
+        //     from item in order.Items
+        //     where order.Customer.LastName == "Lash"
+        //     group item by item.product.Category
+        //     into categoryGroup2
+        //     orderby categoryGroup2.Count() descending
+        //     select new {CategoryName = categoryGroup2.Key};
         
         System.Console.WriteLine($"Favorite product category of Lash: {favoriteCategory}");
         
         System.Console.WriteLine("----------------------------");
         
-        var ordersByStreets = from order in everyOrder
-            group order by order.Customer.Address into streetGroup
-            select new { Street = streetGroup.Key, Count = streetGroup.Count() };
+        //Moim zdaniem to drobne "into" w "group by" ziększa czytelność tego zapytania
+        var ordersPerCity = from order in everyOrder
+            group order by order.Customer.City into cityGroup
+            select new {CityName = cityGroup.Key, CityCount = cityGroup.Count()};
+        
+        // var orderPerCity2 = everyOrder
+        //     .GroupBy(order => order.Customer.City)
+        //     .Select(groupOfCities => new
+        //     {
+        //         City = groupOfCities.Key,
+        //         CityCount = groupOfCities.Count()
+        //     });
 
-        System.Console.WriteLine("Orders by streets of customers:");
-        foreach (var item in ordersByStreets) System.Console.WriteLine($"{item.Street}: {item.Street}");
+        System.Console.WriteLine("Orders by different cities of customers:");
+        foreach (var cities in ordersPerCity) System.Console.WriteLine($"{cities.CityName}: {cities.CityCount}");
         
         System.Console.WriteLine("----------------------------");
         
-        //Zapytanie wyświetla, która kategoria produktów generuje największe zyski
-        var categoryAvgStats = everyOrder
-            .SelectMany(a => a.Items)
-            .GroupBy(item => item.product.Category)
-            .Select(b => new { 
-                Category = b.Key, 
-                AvgValue = b.Average(item => item.TotalPrice) 
-            });
         
-        foreach (var categoryStat in categoryAvgStats)
+        var categoryAvgProfits = everyOrder
+            .SelectMany(item => item.Items)
+            .GroupBy(item => item.product.Category)
+            .Select(order => new
+            {
+                CategoryName = order.Key,
+                AvgProfit = order.Average(item => item.TotalPrice)
+            })
+            .OrderByDescending(item => item.AvgProfit);
+            
+        //Znowu niepotrzebne "let" na którym musimy wykonać operację "average"
+        // var categoryAvgProfits2 = from order in everyOrder
+        //     from item in order.Items
+        //     group item by item.product.Category into profitGroup
+        //     let averageProfit = profitGroup.Average(item => item.TotalPrice)
+        //     orderby profitGroup descending 
+        //     select new {CategoryName2 = profitGroup.Key, Profit = profitGroup.Average(item => item.TotalPrice)};
+        
+        foreach (var categoriesAvg in categoryAvgProfits)
         {
-            System.Console.WriteLine($"{categoryStat.Category} - {categoryStat.AvgValue}");
+            System.Console.WriteLine($"Displaying average profits from all the categories: {categoriesAvg.CategoryName} - {categoriesAvg.AvgProfit}");
         }
     }
 }

@@ -5,24 +5,24 @@ public class SampleData
 {
     public static List<Product> ProductList = new List<Product>
     {
-        new Product("Newspaper", 1.5m, 1, "Daily Use"),
+        new Product("Newspaper", 1.5m, 1, "Magazines"),
         new Product("Soy Sauce Packet", 0.9m, 410, "Condiments"),
         new Product("Clay Pot", 3m, 200, "Gardening"),
         new Product("Twister - The game", 12m, 125, "Tabletop Games"),
         new Product("Cat", 10000m, 1, "Creatures 'n' such"),
-        new Product("Hair gel", 8.99m, 68, "Daily Use - Bathroom"),
+        new Product("Hair gel", 8.99m, 68, "Beauty Products"),
         new Product("Unnecessarily expensive watch with no particular brand", 3155m, 10, "Accessories - Watches"),
     };
 
     public static List<Customer> ListOfCustomers = new List<Customer>
     {
-        new Customer("John", "Pork", "JohnLikesPork@sillymail.com", "414-505-121", "ABC st.", true),
-        new Customer("Jane", "Park", "JaneEleven@sillymail.com", "564-125-153", "Somewhere st.", false),
-        new Customer("Jack", "Peak", "JackIsAwesome@sillymail.com", "674-756-341", "Nowhere st.", true),
-        new Customer("Joseph", "Pack", "JosephPack@sillymail.com", "754-005-111", "Over There st.", false),
-        new Customer("Jannet", "Poke", "Poke@sillymail.com", "476-235-029", "Here st.", false),
-        new Customer("Jacob", "Lash", "MassiveMuscles@Sillymail.com", "765-676-712", "Boosh st.", true),
-        new Customer("Leon", "Kennedy", "Backflips4Life@sillymail.com", "423-456-657", "Bingo st.",  false)
+        new Customer("John", "Pork", "JohnLikesPork@sillymail.com", "414-505-121", "Warsaw", "ABC st.", true),
+        new Customer("Jane", "Park", "JaneEleven@sillymail.com", "564-125-153", "Warsaw", "Somewhere st.", false),
+        new Customer("Jack", "Peak", "JackIsAwesome@sillymail.com", "674-756-341", "Hamburg", "Nowhere st.", true),
+        new Customer("Joseph", "Pack", "JosephPack@sillymail.com", "754-005-111", "Quebec", "Over There st.", false),
+        new Customer("Jannet", "Poke", "Poke@sillymail.com", "476-235-029", "Hamburg", "Here st.", false),
+        new Customer("Jacob", "Lash", "MassiveMuscles@Sillymail.com", "765-676-712", "New York", "Boosh st.", true),
+        new Customer("Leon", "Kennedy", "Backflips4Life@sillymail.com", "423-456-657", "Raccoon City", "Bingo st.",  false)
     };
 
     public static List<Order> ListOfOrders = new List<Order>
