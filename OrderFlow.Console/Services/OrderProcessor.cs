@@ -2,7 +2,7 @@
 
 namespace OrderFlow.Console.Services;
 
-public class OrderProcessor
+public static class OrderProcessor
 {
     
     public static List<Order> FilterOrders(List<Order> orders, Predicate<Order> predicate)

@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace OrderFlow.Console.Models;
+﻿namespace OrderFlow.Console.Models;
 
 delegate void ValidationRule (out string errorMessage);
 
@@ -32,7 +30,7 @@ class OrderValidator
             var productAmountOrdered = item.amountOrdered;
             if (product.AmountLeft == 0 ||  product.AmountLeft < productAmountOrdered)
             {
-                errorMessage = $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.";
+                errorMessage += $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.";
             }
         }
     }
@@ -78,31 +76,33 @@ class OrderValidator
         correctDateRule = isOrderDateCorrect => this.order.OrderDate <= DateTime.Now;
     }
 
-    public void ValidateAll()
+    public List<string> ValidateAll()
     {
+        List<string> listOfRuleBreakers = new List<string>();
         foreach (ValidationRule rule in ruleOfValidity.GetInvocationList())
         {
             rule(out string errorMessage);
 
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                System.Console.WriteLine(errorMessage);
+                listOfRuleBreakers.Add(errorMessage);
             }
         }
 
         if (!statusRule.Invoke(this.order))
         {
-            System.Console.Write("Status of a newly placed order cannot be set as 'CANCELLED'.");
+            listOfRuleBreakers.Add("Status of a newly placed order cannot be set as 'CANCELLED'.");
         }
 
         if (!deliveryMinValueRule.Invoke(this.order))
         {
-            System.Console.WriteLine($"Minimal delivery amount not reached. The minimal amount for your order to be delivered is 20.");
+            listOfRuleBreakers.Add($"Minimal delivery amount not reached. The minimal amount for your order to be delivered is {minDeliveryValue}.");
         }
 
         if (!correctDateRule.Invoke(this.order))
         {
-            System.Console.WriteLine("Date of an order must not be from the future!");
+            listOfRuleBreakers.Add("Date of an order must not be from the future!");
         }
+        return listOfRuleBreakers;
     }
 }
