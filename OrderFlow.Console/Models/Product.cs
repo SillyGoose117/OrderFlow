@@ -14,4 +14,9 @@ public class Product
         AmountLeft = quantityLeft;
         Category = category;
     }
+
+    public override string ToString()
+    {
+        return $"{Category} - {Name} at  {Price}$. Amount left: {AmountLeft}x.";
+    }
 }

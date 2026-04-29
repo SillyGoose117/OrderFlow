@@ -6,7 +6,7 @@ using Models;
 class Program
 
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         //Symulacja zamówień z reakcją subskrybentów:
         var order1 = SampleData.ListOfOrders[0];
@@ -15,19 +15,13 @@ class Program
         var order4 = SampleData.ListOfOrders[3];
         var order5 = SampleData.ListOfOrders[4];
         var order6 = SampleData.ListOfOrders[5];
-        var orderPipeline = new OrderPipeline();
-        var accounting = new Accounting();
-        var log =  new Log();
-        var warehouse = new Warehouse();
+        System.Console.WriteLine("-----------------------------------");
+        //ProcessOrderAsync
+        var externalServiceSimulator = new ExternalServiceSimulator();
+        await externalServiceSimulator.ProcessOrderAsync(order1);
         
-        orderPipeline.StatusChanged += warehouse.OnStatusChanged;
-        orderPipeline.StatusChanged += accounting.GoodAccount;
-        //orderPipeline.ValidationCompleted += accounting.BadAccount;
-
-        orderPipeline.StatusChanged += log.LogThisGoodOrder;
-        orderPipeline.ValidationCompleted += log.LogThisBadOrder;
-        
-        orderPipeline.ProcessOrder(order1);
-        orderPipeline.ProcessOrder(order4);
+        //ProcessMultipleOrdersAsync
+        var everyOrder = SampleData.ListOfOrders;
+        await externalServiceSimulator.ProcessMultipleOrdersAsync(everyOrder);
     }
 }
