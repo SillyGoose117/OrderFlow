@@ -10,6 +10,11 @@ public class Customer
     public string Address { get; set; }
     public bool IsVIP { get; set; }
 
+    public Customer()
+    {
+        
+    }
+
     public Customer(string name, string lastName, string email, string phone, string city, string address, bool isVIP)
     {
         Name = name;

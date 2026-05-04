@@ -7,6 +7,11 @@ public class OrderItem
 
     public decimal TotalPrice => product.Price * amountOrdered;
 
+    public OrderItem()
+    {
+        
+    }
+
     public OrderItem(Product product, int quantity)
     {
         this.product = product;
