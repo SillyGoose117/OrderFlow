@@ -9,6 +9,7 @@ public class Customer
     public string City { get; set; }
     public string Address { get; set; }
     public bool IsVIP { get; set; }
+    public Guid CustomerId { get; set; }
 
     public Customer()
     {
@@ -24,6 +25,7 @@ public class Customer
         City = city;
         Address = address;
         IsVIP = isVIP;
+        CustomerId = Guid.NewGuid();
     }
 
     public override string ToString()
