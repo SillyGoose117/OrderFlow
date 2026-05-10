@@ -19,8 +19,4 @@
       <Compile Remove="Services\OrdeFlowContext.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Watchers\" />
-    </ItemGroup>
-
 </Project>

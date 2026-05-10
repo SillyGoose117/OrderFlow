@@ -1,5 +1,6 @@
 ﻿using OrderFlow.Console.Persistence;
 using OrderFlow.Console.Services;
+using OrderFlow.Console.Watchers;
 
 namespace OrderFlow.Console;
 using Data;
@@ -11,14 +12,18 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var everyOrder = SampleData.ListOfOrders;
-        var makeAReport = new XmlReportBuilder();
-        var aReport = makeAReport.BuildReport(everyOrder);
-        await makeAReport.SaveReportAsync(aReport, "TestFiles/report.xml");
-        var showExpensiveOrders = await makeAReport.FindingHighValueOrderIdsAsync("TestFiles/report.xml", 1000m);
-        foreach (var expensiveOrder in showExpensiveOrders)
+        var path = "C:\\Users\\kubar\\RiderProjects\\OrderFlow\\OrderFlow.Console\\bin\\Debug\\net10.0\\TestFiles";
+        var pipeline = new OrderPipeline();
+        using var watcher = new InboxWatcher(path, pipeline);
+        var repo = new OrderRepository();
+        var orders = SampleData.ListOfOrders;
+        
+        for (var i = 0; i <= 3; i++)
         {
-            System.Console.WriteLine(expensiveOrder);
+            await repo.SaveToJsonAsync(orders, Path.Combine(path, $"File{i}.json"));
+            await Task.Delay(2000);
         }
+        
+        System.Console.ReadKey();
     }
 }

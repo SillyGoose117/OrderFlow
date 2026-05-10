@@ -5,31 +5,34 @@ namespace OrderFlow.Console.Services;
 public class ExternalServiceSimulator
 {
     Random random = new Random();
-
+    //Tymczasowo wyczyściłem zwracane wiadomości, żeby łatwiej można zauważyć watcher'a
     private async Task<string> CheckInventoryAsync(Product product)
     {
-        System.Console.WriteLine($"Beginning inventory inspection of {product.Name}...");
+        //System.Console.WriteLine($"Beginning inventory inspection of {product.Name}...");
         int delayMs = random.Next(500, 1500);
         await Task.Delay(delayMs);
-        //System.Console.WriteLine(product.ToString());
-        return $"{product} Inventory inspection completed.";
+        
+        //return $"{product.Name} Inventory inspection completed.";
+        return $"Product {product.Name} done";
     }
 
     private async Task<string> ValidatePaymentAsync(Order order)
     {
         int delayMs = random.Next(1000, 2000);
-        System.Console.WriteLine($"Beginning payment validation of order {order.OrderId}.");
+        //System.Console.WriteLine($"Beginning payment validation of order {order.OrderId}.");
         await Task.Delay(delayMs);
-        return $"Success! Payment for order {order.OrderId} has been validated.";
+        //return $"Success! Payment for order {order.OrderId} has been validated.";
+        return "Payment Successful";
     }
     
     private async Task<string> CalculateShippingAsync(Order order)
     {
         int delayMs = random.Next(300, 800);
         int shippingPirce = random.Next(10, 45);
-        System.Console.WriteLine($"Calculating shipping details for order {order.OrderId}.");
+        //System.Console.WriteLine($"Calculating shipping details for order {order.OrderId}.");
         await Task.Delay(delayMs);
-        return $"Shipping details have been added to your final order {order.TotalAmount +  shippingPirce}.";
+        //return $"Shipping details have been added to your final order {order.TotalAmount +  shippingPirce}.";
+        return "Shipping calculated";
     }
 
     
