@@ -44,7 +44,7 @@ public class ExternalServiceSimulator
         var sw = Stopwatch.StartNew();
         foreach (var item in order.Items)
         {
-            var a = CheckInventoryAsync(item.product);
+            var a = CheckInventoryAsync(item.Product);
             combinedTasks.Add(a);
         }
         var b = ValidatePaymentAsync(order);

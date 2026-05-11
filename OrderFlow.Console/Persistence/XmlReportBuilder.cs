@@ -19,7 +19,7 @@ public class XmlReportBuilder
             .GroupBy(o => o.Customer)
             .Select(customerGroup => new XElement("customer",
                 new XAttribute("id", customerGroup.Key.CustomerId),
-                new XAttribute("name", customerGroup.Key.LastName),
+                new XAttribute("name", customerGroup.Key.FullName),
                 new XAttribute("isVip", customerGroup.Key.IsVIP),
                     new XElement("orderCount", customerGroup.Count()),
                     new XElement("totalSpent", customerGroup.Sum(o => o.TotalAmount)),

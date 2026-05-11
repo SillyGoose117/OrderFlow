@@ -16,13 +16,13 @@ public class SampleData
 
     public static List<Customer> ListOfCustomers = new List<Customer>
     {
-        new Customer("John", "Pork", "JohnLikesPork@sillymail.com", "414-505-121", "Warsaw", "ABC st.", true),
-        new Customer("Jane", "Park", "JaneEleven@sillymail.com", "564-125-153", "Warsaw", "Somewhere st.", false),
-        new Customer("Jack", "Peak", "JackIsAwesome@sillymail.com", "674-756-341", "Hamburg", "Nowhere st.", true),
-        new Customer("Joe", "Pack", "JosephPack@sillymail.com", "754-005-111", "Quebec", "Over There st.", false),
-        new Customer("Jannet", "Poke", "Poke@sillymail.com", "476-235-029", "Hamburg", "Here st.", false),
-        new Customer("Jacob", "Lash", "MassiveMuscles@Sillymail.com", "765-676-712", "New York", "Boosh st.", true),
-        new Customer("Leon", "Kennedy", "Backflips4Life@sillymail.com", "423-456-657", "Raccoon City", "Bingo st.",  false)
+        new Customer("John Pork", "JohnLikesPork@sillymail.com", "414-505-121", "Warsaw", "ABC st.", true),
+        new Customer("Jane Park", "JaneEleven@sillymail.com", "564-125-153", "Warsaw", "Somewhere st.", false),
+        new Customer("Jack Peak", "JackIsAwesome@sillymail.com", "674-756-341", "Hamburg", "Nowhere st.", true),
+        new Customer("Joe Pack", "JosephPack@sillymail.com", "754-005-111", "Quebec", "Over There st.", false),
+        new Customer("Jannet Poke", "Poke@sillymail.com", "476-235-029", "Hamburg", "Here st.", false),
+        new Customer("Jacob Lash", "MassiveMuscles@Sillymail.com", "765-676-712", "New York", "Boosh st.", true),
+        new Customer("Leon Kennedy", "Backflips4Life@sillymail.com", "423-456-657", "Raccoon City", "Bingo st.",  false)
     };
 
     public static List<Order> ListOfOrders = new List<Order>
@@ -31,9 +31,9 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[0], 1),
-                new OrderItem(ProductList[1], 13),
-                new OrderItem(ProductList[4], 1)
+                new OrderItem(ProductList[0], 1, ProductList[0].Price),
+                new OrderItem(ProductList[1], 13, ProductList[1].Price),
+                new OrderItem(ProductList[4], 1, ProductList[4].Price),
             },
             OrderDate = DateTime.Now,
             CurrentStatus = Order.Status.New 
@@ -42,9 +42,9 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[0], 2),
-                new OrderItem(ProductList[1], 2),
-                new OrderItem(ProductList[2], 2)
+                new OrderItem(ProductList[0], 2, ProductList[0].Price),
+                new OrderItem(ProductList[1], 2, ProductList[1].Price),
+                new OrderItem(ProductList[2], 2, ProductList[2].Price),
             },    
             OrderDate = DateTime.Now.AddDays(5),
             CurrentStatus = Order.Status.Processing 
@@ -53,8 +53,8 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[2], 1), // Clay Pot
-                new OrderItem(ProductList[3], 1)  // Twister
+                new OrderItem(ProductList[2], 1, ProductList[2].Price), // Clay Pot
+                new OrderItem(ProductList[3], 1, ProductList[3].Price)  // Twister
             },
             OrderDate = DateTime.Now.AddDays(-6),
             CurrentStatus = Order.Status.Processing 
@@ -63,7 +63,7 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[1], 153) // Soy Sauce
+                new OrderItem(ProductList[1], 153, ProductList[1].Price) // Soy Sauce
             },
             OrderDate = DateTime.Now.AddDays(-9),
             CurrentStatus = Order.Status.Validated
@@ -72,7 +72,7 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[3], 1) // Twister
+                new OrderItem(ProductList[3], 1, ProductList[3].Price) // Twister
             },
             OrderDate = DateTime.Now.AddDays(-10),
             CurrentStatus = Order.Status.Completed
@@ -81,9 +81,9 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[0], 1), // Newspaper
-                new OrderItem(ProductList[1], 2), // Soy Sauce
-                new OrderItem(ProductList[2], 1)  // Clay Pot
+                new OrderItem(ProductList[0], 1, ProductList[0].Price), // Newspaper
+                new OrderItem(ProductList[1], 2, ProductList[1].Price), // Soy Sauce
+                new OrderItem(ProductList[2], 1, ProductList[2].Price)  // Clay Pot
             },
             OrderDate = DateTime.Now.AddDays(-15),
             CurrentStatus = Order.Status.Cancelled
@@ -92,7 +92,7 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[5], 59), // Hair gel
+                new OrderItem(ProductList[5], 59, ProductList[5].Price), // Hair gel
 
             },
             OrderDate = DateTime.Now,
@@ -102,9 +102,9 @@ public class SampleData
         {
             Items = new List<OrderItem>
             {
-                new OrderItem(ProductList[6], 2), // Expensive watch
-                new OrderItem(ProductList[1], 112), // Soy Sauce
-                new OrderItem(ProductList[5], 1)  // Hair gel
+                new OrderItem(ProductList[6], 2, ProductList[6].Price), // Expensive watch
+                new OrderItem(ProductList[1], 112, ProductList[1].Price), // Soy Sauce
+                new OrderItem(ProductList[5], 1, ProductList[5].Price)  // Hair gel
             },
             OrderDate = DateTime.Now,
             CurrentStatus = Order.Status.New

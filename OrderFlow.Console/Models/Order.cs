@@ -5,17 +5,14 @@ namespace OrderFlow.Console.Models;
 
 public class Order
 {
-    [XmlElement("customer")]
-    public Customer Customer { get; set; }
-    [JsonPropertyName("created_at")]
+    public Guid OrderId { get; set; }
     public DateTime OrderDate { get; set; }
-    public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     public enum Status { New, Validated, Processing, Completed, Cancelled }
     public Status CurrentStatus { get; set; }
-    [JsonIgnore] [XmlIgnore]
+    public List<OrderItem> Items { get; set; } = new List<OrderItem>();
+    public Guid CustomerId { get; set; }
+    public Customer Customer { get; set; }
     public decimal TotalAmount => Items.Sum(item => item.TotalPrice);
-    [XmlAttribute("id")]
-    public Guid OrderId { get; set; }
 
     public Order()
     {

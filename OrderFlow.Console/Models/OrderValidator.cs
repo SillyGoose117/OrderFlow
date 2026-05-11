@@ -26,8 +26,8 @@ class OrderValidator
         errorMessage = "";
         foreach (var item in this.order.Items)
         {
-            var product = item.product;
-            var productAmountOrdered = item.amountOrdered;
+            var product = item.Product;
+            var productAmountOrdered = item.Quantity;
             if (product.AmountLeft == 0 ||  product.AmountLeft < productAmountOrdered)
             {
                 errorMessage += $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.";
@@ -38,13 +38,9 @@ class OrderValidator
     private void ValidateCustomerInfo(out string errorMessage) //Sprawdź czy informacje dot. klienta nie są wybrakowane (delegat ValidationRule)
     {
         errorMessage = "";
-        if (string.IsNullOrWhiteSpace(this.order.Customer.Name))
+        if (string.IsNullOrWhiteSpace(this.order.Customer.FullName))
         {
-            errorMessage += "Customer name cannot be empty.\n";
-        } 
-        if (string.IsNullOrWhiteSpace(this.order.Customer.LastName))
-        {
-            errorMessage += "Customer last name cannot be empty.\n";
+            errorMessage += "Customer name and last name cannot be empty.\n";
         } 
         if (string.IsNullOrWhiteSpace(this.order.Customer.Email))
         {
