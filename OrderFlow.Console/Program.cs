@@ -12,7 +12,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var path = "C:\\Users\\kubar\\RiderProjects\\OrderFlow\\OrderFlow.Console\\bin\\Debug\\net10.0\\TestFiles";
+        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles");
         var pipeline = new OrderPipeline();
         using var watcher = new InboxWatcher(path, pipeline);
         var repo = new OrderRepository();
