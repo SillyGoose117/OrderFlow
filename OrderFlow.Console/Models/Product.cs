@@ -6,7 +6,7 @@ public class Product
     public decimal Price { get; set; }
     public int AmountLeft { get; set; }
     public string Category { get; set; }
-    public Guid ProductId { get; set; }
+    public int ProductId { get; set; }
     public List<OrderItem> OrderedItems { get; set; }
 
 
@@ -21,7 +21,6 @@ public class Product
         Price = price;
         Category = category;
         AmountLeft = quantityLeft;
-        ProductId = Guid.NewGuid();
     }
 
     public override string ToString()

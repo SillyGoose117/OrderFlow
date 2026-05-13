@@ -5,14 +5,15 @@ namespace OrderFlow.Console.Models;
 
 public class Order
 {
-    public Guid OrderId { get; set; }
+    public int OrderId { get; set; }
     public DateTime OrderDate { get; set; }
     public enum Status { New, Validated, Processing, Completed, Cancelled }
     public Status CurrentStatus { get; set; }
     public List<OrderItem> Items { get; set; } = new List<OrderItem>();
-    public Guid CustomerId { get; set; }
+    public int CustomerId { get; set; }
     public Customer Customer { get; set; }
     public decimal TotalAmount => Items.Sum(item => item.TotalPrice);
+    public string? Notes { get; set; }
 
     public Order()
     {
@@ -24,7 +25,6 @@ public class Order
         Customer = customer;
         CurrentStatus = Status.New;
         OrderDate = DateTime.Now;
-        OrderId =  Guid.NewGuid();
     }
 
     public override string ToString()
