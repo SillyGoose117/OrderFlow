@@ -28,7 +28,7 @@ class OrderValidator
         {
             var product = item.Product;
             var productAmountOrdered = item.Quantity;
-            if (product.AmountLeft == 0 ||  product.AmountLeft < productAmountOrdered)
+            if (product.Stock == 0 ||  product.Stock < productAmountOrdered)
             {
                 errorMessage += $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.";
             }

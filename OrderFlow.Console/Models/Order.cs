@@ -29,6 +29,7 @@ public class Order
 
     public override string ToString()
     {
-        return $"{OrderId} - {Customer} This order is currently: {CurrentStatus} - {OrderDate}";
+        return $"Inspecting an order with this id: [{OrderId}], belonging to this customer [{Customer.FullName}] - [{CustomerId}]. Curent status - {CurrentStatus}. " +
+               $"Date ordered - {OrderDate}";
     }
 }
