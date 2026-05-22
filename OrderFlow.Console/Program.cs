@@ -10,6 +10,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        //Zadanie 2
         //Przykład poprawengo zamówienia:
         var goodOrder = SampleData.ListOfOrders[0];
         var myGoodValidator = new OrderValidator(goodOrder);
@@ -22,6 +23,7 @@ class Program
         myBadValidator.ValidateAll();
         System.Console.WriteLine("----------------------------");
         
+        //Zadanie 3
         //Przykłady działania klasy OrderProcessor:
         var everyOrder = SampleData.ListOfOrders;
         var expensiveOrderAmount = 130;
@@ -80,6 +82,7 @@ class Program
                 order => System.Console.WriteLine("Selected order date: " + order.OrderDate)
                 );
         
+        //Zadanie 4
         //Zapytania LINQ:
         System.Console.WriteLine("----------------------------");
         
