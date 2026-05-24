@@ -19,7 +19,7 @@ public class SampleData
         new Customer("John", "Pork", "JohnLikesPork@sillymail.com", "414-505-121", "Warsaw", "ABC st.", true),
         new Customer("Jane", "Park", "JaneEleven@sillymail.com", "564-125-153", "Warsaw", "Somewhere st.", false),
         new Customer("Jack", "Peak", "JackIsAwesome@sillymail.com", "674-756-341", "Hamburg", "Nowhere st.", true),
-        new Customer("Joe", "Pack", "JosephPack@sillymail.com", "754-005-111", "Quebec", "Over There st.", false),
+        new Customer("", "", "JosephPack@sillymail.com", "754-005-111", "", "Over There st.", false),
         new Customer("Jannet", "Poke", "Poke@sillymail.com", "476-235-029", "Hamburg", "Here st.", false),
         new Customer("Jacob", "Lash", "MassiveMuscles@Sillymail.com", "765-676-712", "New York", "Boosh st.", true),
         new Customer("Leon", "Kennedy", "Backflips4Life@sillymail.com", "423-456-657", "Raccoon City", "Bingo st.",  false)

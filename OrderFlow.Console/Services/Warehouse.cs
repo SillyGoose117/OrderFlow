@@ -12,9 +12,4 @@ public class Warehouse
             System.Console.WriteLine($"[Warehouse] Order {e.Order.OrderId} is being packed for delivery!");
         }
     }
-
-    // public void OnNoStatusChanged(object? sender, OrderValidationEventArgs e)
-    // {
-    //     
-    // }
 }

@@ -26,10 +26,10 @@ public class ExternalServiceSimulator
     private async Task<string> CalculateShippingAsync(Order order)
     {
         int delayMs = random.Next(300, 800);
-        int shippingPirce = random.Next(10, 45);
+        int shippingPrice = random.Next(10, 45);
         System.Console.WriteLine($"Calculating shipping details for order {order.OrderId}.");
         await Task.Delay(delayMs);
-        return $"Shipping details have been added to your final order {order.TotalAmount +  shippingPirce}.";
+        return $"Shipping details have been added to your final order {order.TotalAmount +  shippingPrice}.";
     }
 
     
@@ -63,9 +63,9 @@ public class ExternalServiceSimulator
         var semaphore = new SemaphoreSlim(3, 3); //Limit przetwarzanych zamówień do makssymalnie 3
         var tasksCompleted = 0;
         var taskCounterLock = new object(); //Kłódka dla licznika wykonanych zadań.
-        System.Console.WriteLine("=================================================");
-        System.Console.WriteLine(" TEST 1: PRZETWARZANIE RÓWNOLEGŁE (MAX 3 NARAZ)");
-        System.Console.WriteLine("=================================================");
+        System.Console.WriteLine("============================================");
+        System.Console.WriteLine(" TEST 1: PRZETWARZANIE RÓWNOLEGŁE");
+        System.Console.WriteLine("============================================");
         var sw = Stopwatch.StartNew();
         
         async Task ProcessOrderUsingSemaphoreAsync(Order semaOrder, SemaphoreSlim semaphore2) //Metoda pomocnicza zapobiega zakleszczeniu, wykonuje zamówienia równolegle
@@ -94,9 +94,9 @@ public class ExternalServiceSimulator
         sw.Stop();
         System.Console.WriteLine($"\nParallel processing completed in {sw.ElapsedMilliseconds} ms.");
         
-        System.Console.WriteLine("\n=================================================");
+        System.Console.WriteLine("============================================");
         System.Console.WriteLine(" TEST 2: PRZETWARZANIE SEKWENCYJNE (PO KOLEI)");
-        System.Console.WriteLine("=================================================\n");
+        System.Console.WriteLine("============================================");
         sw.Restart();
         foreach (var order in orders) //Wykonywanie zamówień sekwencyjnioe
         {

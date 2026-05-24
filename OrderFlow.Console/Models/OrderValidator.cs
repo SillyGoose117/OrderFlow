@@ -30,7 +30,7 @@ class OrderValidator
             var productAmountOrdered = item.amountOrdered;
             if (product.AmountLeft == 0 ||  product.AmountLeft < productAmountOrdered)
             {
-                errorMessage += $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.";
+                errorMessage += $"The item you were trying to get \"{product.Name}\" is currently out of stock or in insufficient quantity.\n";
             }
         }
     }
@@ -53,7 +53,11 @@ class OrderValidator
         if (string.IsNullOrWhiteSpace(this.order.Customer.Phone))
         {
             errorMessage += "Customer phone number cannot be empty.\n";
-        } 
+        }
+        if (string.IsNullOrWhiteSpace(this.order.Customer.City))
+        {
+            errorMessage += "You must pick a city.\n";
+        }
         if (string.IsNullOrWhiteSpace(this.order.Customer.Address))
         {
             errorMessage += "Customer address cannot be empty.";
@@ -81,7 +85,7 @@ class OrderValidator
         List<string> listOfRuleBreakers = new List<string>();
         foreach (ValidationRule rule in ruleOfValidity.GetInvocationList())
         {
-            rule(out string errorMessage);
+            rule(out var errorMessage);
 
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
