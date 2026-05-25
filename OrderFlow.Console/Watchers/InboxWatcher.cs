@@ -32,20 +32,18 @@ public class InboxWatcher : IDisposable
             var directory = Path.GetDirectoryName(args.FullPath);
             var filename = Path.GetFileName(args.FullPath);
 
-            var processed = Path.Combine(directory, "processed", filename);
-            var failedFiles = Path.Combine(directory, "failed", filename);
-            var errors = Path.Combine(directory, "failed", "errors.json");
+            var processed = Path.Combine(directory!, "processed", filename);
+            var failedFiles = Path.Combine(directory!, "failed", filename);
+            var errors = Path.Combine(directory!, "failed", filename + "errors.json");
 
             await semaphoreSlim.WaitAsync();
             
             try
             {
-                var content =
-                    await SafeRead(args.FullPath); // Na przyszłość - "args.FULLPATH" to po w tym przypadku "path"
-
+                var content = await SafeRead(args.FullPath); // Na przyszłość - "args.FULLPATH" to po w tym przypadku "path"
                 if (content == null)
                 {
-                    System.Console.WriteLine("No file found after 5 different tries.");
+                    System.Console.WriteLine($"[Wacther] No file {filename} found after 5 different tries.");
                     return;
                 }
 
@@ -61,9 +59,11 @@ public class InboxWatcher : IDisposable
                 }
 
                 File.Move(args.FullPath, processed);
+                System.Console.WriteLine($"[Watcher] File {filename} moved to processed.");
             }
             catch (Exception e)
             {
+                System.Console.WriteLine($"[Watcher] Error processing {filename}: {e.Message}");
                 File.Move(args.FullPath, failedFiles);
                 File.WriteAllText(errors, e.Message);
             }

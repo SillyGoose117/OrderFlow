@@ -15,12 +15,16 @@ public class Log
 
     public void LogThisBadOrder(object? sender, OrderValidationEventArgs e)
     {
-        if (e.Errors.Any())
+        if (e.Errors.Count > 0)
         {
             System.Console.WriteLine($"[Log] Order with this id, {e.Order.OrderId} has encountered some unexpected errors:");
             foreach (var error in e.Errors)
             {
-             System.Console.WriteLine($"->{error}");   
+                var individualError = error.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var errorMessage in individualError)
+                {
+                    System.Console.WriteLine($"-> {errorMessage}");     
+                }
             }
         }
     }

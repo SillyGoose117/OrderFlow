@@ -19,9 +19,9 @@ public class OrderRepository
         };
         
         var jsonDirectory = Path.GetDirectoryName(path);
-        if (Directory.Exists(path))
+        if (Directory.Exists(jsonDirectory))
         {
-            System.Console.WriteLine("Catalogue already exists!");
+            System.Console.WriteLine("Json catalogue already exists!");
         }
         else
         {
@@ -54,9 +54,9 @@ public class OrderRepository
     public async Task SaveToXmlAsync(IEnumerable<Order> orders, string path)
     {
         var xmlDirectory = Path.GetDirectoryName(path);
-        if (Directory.Exists(path))
+        if (Directory.Exists(xmlDirectory))
         {
-            System.Console.WriteLine("Catalogue already exists!");
+            System.Console.WriteLine("Xml catalogue already exists!");
         }
         else
         {

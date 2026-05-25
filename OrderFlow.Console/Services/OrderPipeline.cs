@@ -15,7 +15,7 @@ public class OrderPipeline
         System.Console.WriteLine("Beginning order validation...");
         var validator = new OrderValidator(order);
         var errors = validator.ValidateAll();
-        bool isValid = !errors.Any();
+        bool isValid = errors.Count == 0;
         ValidationCompleted?.Invoke(this, new OrderValidationEventArgs(order, isValid, errors));
         
         if (!isValid) return;
@@ -27,7 +27,7 @@ public class OrderPipeline
         System.Console.WriteLine("Order processing completed, ending processing...");
     }
 
-    public void StatusUpdater (Order order, Order.Status newStatus)
+    private void StatusUpdater (Order order, Order.Status newStatus)
     {
         var oldStatus = order.CurrentStatus;
         order.CurrentStatus = newStatus;
