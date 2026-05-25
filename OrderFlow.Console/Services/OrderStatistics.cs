@@ -9,12 +9,12 @@ public class OrderStatistics
     private decimal totalRevenue = 0;
     private ConcurrentDictionary<Order.Status, int> ordersPerStatus = new ConcurrentDictionary<Order.Status, int>();
     private List<string> processingErrors = new List<string>();
+    //    private ordersPerStatus = new Dictionary<Order.Status, int>();
+    //    private processingErrors = new List<string>();
     
     //Metoda z błędami, która nie posiada zabezpieczeń
     // public void CollectStats(Order order)
     // {
-    //     ordersPerStatus = new Dictionary<Order.Status, int>();
-    //     processingErrors = new List<string>();
     //     totalProcessed++;
     //     totalRevenue += order.TotalAmount;
     //     if (!ordersPerStatus.TryAdd(order.CurrentStatus, 1))
