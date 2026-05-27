@@ -4,18 +4,44 @@ namespace OrderFlow.Console.Services;
 
 public class DiscountCalculator
 {
+    private const decimal VipDiscountRate = 0.10m;
+    private const decimal DiscountRate = 0.05m;
+    private const decimal DiscountThreshold = 0.25m;
+    private const decimal HighValueDiscountThreshold = 10000m;
+    private const decimal VipHighValueDiscountThreshold = 5000m;
+    private const decimal LowValueDiscountThreshold = 1000m;
     public decimal CalculateDiscount(Order order)
     {
-        var discount = 0m;
-        if (order.Customer.IsVIP)
+        var discount = CalculateDiscountPercentage(order);
+        
+        if (discount > DiscountThreshold)
         {
-            discount = 0.10m;
-            discount = order.TotalAmount > 5000 ? discount += 0.05m : discount;
+            discount = DiscountThreshold;
         }
-        discount = order.TotalAmount > 1000 ? discount += 0.05m : discount;
-        discount = order.TotalAmount > 10000 ? discount += 0.1m : discount; //Dobija do 25% rabatu (nawet więcej bo 30%)
-        discount = Math.Min(discount, 0.25m); //Ogranicza rabat do maksymalnnie 25% na potrzeby testu
         discount *= order.TotalAmount;
+        return discount;
+    }
+
+    private decimal CalculateDiscountPercentage(Order order)
+    {
+        decimal discount = 0;
+        if (order.Customer.IsVIP) //+15% total
+        {
+            discount = VipDiscountRate;
+            if (order.TotalAmount > VipHighValueDiscountThreshold)
+            {
+                discount += DiscountRate;
+            }
+        }
+        
+        if (order.TotalAmount > LowValueDiscountThreshold) //+10% total
+        {
+            discount += DiscountRate;
+            if (order.TotalAmount > HighValueDiscountThreshold)
+            {
+                discount += DiscountRate;
+            }
+        }
         return discount;
     }
 }
