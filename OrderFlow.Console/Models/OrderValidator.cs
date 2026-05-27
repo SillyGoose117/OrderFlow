@@ -2,17 +2,17 @@
 
 delegate void ValidationRule (out string errorMessage);
 
-class OrderValidator
+public class OrderValidator
 {
     private Order order;
     
     private ValidationRule ruleOfValidity;
-    private Func<Order, bool> statusRule;
-    private Func<Order, bool> deliveryMinValueRule;
-    private Func<Order, bool> correctDateRule;
-    private int minDeliveryValue = 20;
+    public Func<Order, bool> statusRule;
+    public Func<Order, bool> deliveryMinValueRule;
+    public Func<Order, bool> correctDateRule;
+    public int minDeliveryValue = 20;
 
-    private void CheckOrderQuantity(out string errorMessage) //Sprawdź czy koszyk nie jest pusty (delegat ValidationRule)
+    public void CheckIfCartEmpty(out string errorMessage) //Sprawdź czy koszyk nie jest pusty (delegat ValidationRule)
     {
         errorMessage = "";
         if (this.order.Items.Count < 1)
@@ -21,7 +21,7 @@ class OrderValidator
         }
     }
 
-    private void ValidateItemAvailability(out string errorMessage) //Sprawdź czy produkt z zamówienia jest dostępny (delegat ValidationRule)
+    public void ValidateItemAvailability(out string errorMessage) //Sprawdź czy produkt z zamówienia jest dostępny (delegat ValidationRule)
     {
         errorMessage = "";
         foreach (var item in this.order.Items)
@@ -35,7 +35,7 @@ class OrderValidator
         }
     }
 
-    private void ValidateCustomerInfo(out string errorMessage) //Sprawdź czy informacje dot. klienta nie są wybrakowane (delegat ValidationRule)
+    public void ValidateCustomerInfo(out string errorMessage) //Sprawdź czy informacje dot. klienta nie są wybrakowane (delegat ValidationRule)
     {
         errorMessage = "";
         if (string.IsNullOrWhiteSpace(this.order.Customer.FullName))
@@ -65,7 +65,7 @@ class OrderValidator
         this.order = orderToValidate;
         
         ruleOfValidity = ValidateItemAvailability;
-        ruleOfValidity += CheckOrderQuantity;
+        ruleOfValidity += CheckIfCartEmpty;
         ruleOfValidity += ValidateCustomerInfo;
         
         statusRule = isOrderStatusCorrect => isOrderStatusCorrect.CurrentStatus != Order.Status.Cancelled; //Zamóienie nie może być "cancelled"
