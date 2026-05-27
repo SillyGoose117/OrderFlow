@@ -10,6 +10,8 @@ public class DiscountCalcTests
     {
         //Arrange
         var order = new Order {Customer = new Customer {IsVIP = false}};
+        var orderItemTest = new OrderItem { Quantity = 2 , UnitPrice = 50 };
+        order.Items.Add(orderItemTest);
         var calculator = new DiscountCalculator();
         //Act
         decimal discount = calculator.CalculateDiscount(order);
@@ -23,6 +25,7 @@ public class DiscountCalcTests
         //Arrange
         var order = new Order {Customer = new Customer {IsVIP = true}};
         var orderItemTest = new OrderItem { Quantity = 2 , UnitPrice = 50 };
+        order.Items.Add(orderItemTest);
         var calculator = new DiscountCalculator();
         //Act
         decimal discount = calculator.CalculateDiscount(order);
