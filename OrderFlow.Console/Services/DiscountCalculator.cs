@@ -6,7 +6,13 @@ public class DiscountCalculator
 {
     public decimal CalculateDiscount(Order order)
     {
-        decimal discount = order.Customer.IsVIP ? order.TotalAmount * 0.10m : 0m;
+        var discount = 0m;
+        if (order.Customer.IsVIP)
+        {
+            discount = 0.10m;
+        }
+        discount = order.TotalAmount > 1000 ? discount += 0.05m : discount;
+        discount *= order.TotalAmount;
         return discount;
     }
 }
