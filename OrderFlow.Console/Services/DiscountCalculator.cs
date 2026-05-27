@@ -10,6 +10,7 @@ public class DiscountCalculator
         if (order.Customer.IsVIP)
         {
             discount = 0.10m;
+            discount = order.TotalAmount > 5000 ? discount += 0.05m : discount;
         }
         discount = order.TotalAmount > 1000 ? discount += 0.05m : discount;
         discount *= order.TotalAmount;
