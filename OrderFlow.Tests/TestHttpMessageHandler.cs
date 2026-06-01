@@ -1,7 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Microsoft.Extensions.Http.Logging;
-using Moq;
 using OrderFlow.Console.Services;
 
 namespace OrderFlow.Tests;
@@ -148,6 +146,6 @@ public class ConversionRatesTest
         await currencyServices.GetRateAsync(fromCurrency);
         //Assert
         Assert.NotNull(handler.CorrectUri);
-        Assert.Contains(expectedUrl, handler.CorrectUri.ToString());
+        Assert.Equal(expectedUrl, handler.CorrectUri.ToString());
     }
 }
